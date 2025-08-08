@@ -27,6 +27,7 @@ dependencies {
     api("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.19.0")
     api("dev.triumphteam:triumph-gui:3.1.11")
     api("dev.triumphteam:triumph-cmd-bukkit:2.0.0-BETA-3")
+    compileOnly("org.xerial:sqlite-jdbc:3.50.3.0")
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.6")
 }
@@ -38,6 +39,7 @@ tasks.named<ShadowJar>("shadowJar") {
     archiveClassifier.set("")
     archiveFileName.set(rootProject.name + "-" + rootProject.version + ".jar")
     mergeServiceFiles()
+
 
     relocate("com.fasterxml.jackson", "com.aethercane.libs.jackson")
     relocate("dev.triumphteam", "com.aethercane.libs.triumphteam")
