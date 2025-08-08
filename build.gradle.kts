@@ -2,8 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     `java-library`
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-
+    id("com.gradleup.shadow") version "8.3.0"
 }
 
 group = "com.aethercane"
@@ -22,9 +21,6 @@ dependencies {
     api("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.19.0")
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
 }
-
-java.sourceCompatibility = JavaVersion.VERSION_21
-
 tasks.withType<JavaCompile>(){
     options.encoding = "UTF-8"
 }
@@ -34,12 +30,12 @@ tasks.named<ShadowJar>("shadowJar") {
     archiveFileName.set(rootProject.name + "-" + rootProject.version + ".jar")
     mergeServiceFiles()
 
-    relocate("com.fasterxml.jackson", "com.aethercanelib.libs.jackson")
-}
 
+    relocate("com.fasterxml.jackson", "com.aethercane.libs.jackson")
+}
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_21
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
     }
