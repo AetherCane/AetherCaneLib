@@ -1,2 +1,2 @@
-rootProject.name = "aethercanelib"
+rootProject.name = "AetherCaneLib"
 
