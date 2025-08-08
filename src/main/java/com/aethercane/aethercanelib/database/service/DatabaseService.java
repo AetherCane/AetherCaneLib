@@ -10,18 +10,14 @@ import java.sql.SQLException;
 
 public class DatabaseService {
 
-    private JdbcPooledConnectionSource connectionSource;
+    private JdbcConnectionSource connectionSource;
 
     public void init(ConnectionInfo connectionInfo) {
         try {
-            connectionSource = new JdbcPooledConnectionSource(
+            connectionSource = new JdbcConnectionSource(
                     connectionInfo.getUrl(),
                     connectionInfo.getUsername(),
                     connectionInfo.getPassword());
-
-            connectionSource.setMaxConnectionsFree(10);
-            connectionSource.setMaxConnectionAgeMillis(30 * 60 * 1000L);
-            connectionSource.setCheckConnectionsEveryMillis(5 * 60 * 1000L);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

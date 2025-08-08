@@ -26,7 +26,6 @@ public abstract class AbstractRepository<V extends DatabaseObject, ID> {
         try {
             dao = DaoManager.createDao(connectionSource, entityClass);
             TableUtils.createTableIfNotExists(connectionSource, entityClass);
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
