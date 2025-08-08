@@ -16,6 +16,9 @@ repositories {
     maven {
         url = uri("https://repo.triumphteam.dev/snapshots/")
     }
+    maven {
+        url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    }
 }
 
 dependencies {
@@ -25,6 +28,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     implementation("dev.triumphteam:triumph-gui:3.1.11")
     implementation("dev.triumphteam:triumph-cmd-bukkit:2.0.0-BETA-3")
+    compileOnly("me.clip:placeholderapi:2.11.6")
 }
 tasks.withType<JavaCompile>(){
     options.encoding = "UTF-8"
