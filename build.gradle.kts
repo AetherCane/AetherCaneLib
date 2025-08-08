@@ -13,6 +13,7 @@ repositories {
     maven {
         url = uri("https://repo.papermc.io/repository/maven-public/")
     }
+    maven("https://repo.triumphteam.dev/snapshots/")
 }
 
 dependencies {
@@ -20,6 +21,8 @@ dependencies {
     api("com.fasterxml.jackson.core:jackson-databind:2.19.0")
     api("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.19.0")
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
+    implementation("dev.triumphteam:triumph-gui:3.1.11")
+    implementation("dev.triumphteam:triumph-cmd-bukkit:v2.0.0-BETA-3")
 }
 tasks.withType<JavaCompile>(){
     options.encoding = "UTF-8"
@@ -32,6 +35,7 @@ tasks.named<ShadowJar>("shadowJar") {
 
 
     relocate("com.fasterxml.jackson", "com.aethercane.libs.jackson")
+    relocate("dev.triumphteam", "com.aethercane.libs.triumphteam")
 }
 java {
     targetCompatibility = JavaVersion.VERSION_21
