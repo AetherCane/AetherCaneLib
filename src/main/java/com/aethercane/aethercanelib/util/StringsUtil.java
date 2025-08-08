@@ -17,16 +17,16 @@ public class StringsUtil {
     private final static LegacyComponentSerializer ampersandSerializer = LegacyComponentSerializer.legacyAmpersand();
     private final static LegacyComponentSerializer sectionSerializer = LegacyComponentSerializer.legacySection();
 
-    public static Component applyPlaceholder(String input, Player player){
-        if(!Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")){
+    public static Component applyPlaceholder(String input, Player player) {
+        if (!Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             AetherCaneLib.getPlugin().getServer().getLogger().log(Level.WARNING, "PlaceholderAPI not found, returned original string.");
             return Component.text(input);
         }
         return Component.text(PlaceholderAPI.setPlaceholders(player, input));
     }
 
-    private static Component applyPlaceholder(Component component, Player player){
-        if(!Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")){
+    private static Component applyPlaceholder(Component component, Player player) {
+        if (!Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             AetherCaneLib.getPlugin().getServer().getLogger().log(Level.WARNING, "PlaceholderAPI not found, returned original string.");
             return component;
         }
@@ -34,14 +34,14 @@ public class StringsUtil {
         return Component.text(PlaceholderAPI.setPlaceholders(player, input));
     }
 
-    public static Component applyColor(String input, TagResolver ...resolvers){
+    public static Component applyColor(String input, TagResolver... resolvers) {
         MiniMessage mm = MiniMessage.miniMessage();
         Component legacy = ampersandSerializer.deserialize(input);
         String minimessage = mm.serialize(legacy).replace("\\", "");
         return mm.deserialize(minimessage, resolvers);
     }
 
-    private static Component applyColor(Component component, TagResolver ...resolvers){
+    private static Component applyColor(Component component, TagResolver... resolvers) {
         MiniMessage mm = MiniMessage.miniMessage();
         String input = sectionSerializer.serialize(component);
         Component legacy = ampersandSerializer.deserialize(input);
@@ -49,7 +49,7 @@ public class StringsUtil {
         return mm.deserialize(minimessage, resolvers);
     }
 
-    public static Component applyString(String input, @Nullable Player player, TagResolver ...resolvers){
+    public static Component applyString(String input, @Nullable Player player, TagResolver... resolvers) {
         Component component = Component.text(input);
         if (player != null) {
             component = applyPlaceholder(component, player);
