@@ -9,7 +9,7 @@ public class ConnectionInfo {
     private String username;
     private String password;
 
-    public ConnectionInfo(DriverType driverType, String host, String port, String database,
+    public ConnectionInfo(DriverType driverType, String host, int port, String database,
                           boolean useSSL, String username, String password) {
         this.url = driverType.formatURL(host, port, database, useSSL);
         this.username = username;
