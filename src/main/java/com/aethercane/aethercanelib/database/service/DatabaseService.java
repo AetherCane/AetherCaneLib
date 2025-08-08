@@ -4,6 +4,7 @@ import com.aethercane.aethercanelib.database.model.ConnectionInfo;
 import com.aethercane.aethercanelib.database.repository.AbstractRepository;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
+import com.j256.ormlite.jdbc.db.DatabaseTypeUtils;
 import com.j256.ormlite.support.ConnectionSource;
 
 import java.sql.SQLException;
@@ -17,7 +18,8 @@ public class DatabaseService {
             connectionSource = new JdbcConnectionSource(
                     connectionInfo.getUrl(),
                     connectionInfo.getUsername(),
-                    connectionInfo.getPassword());
+                    connectionInfo.getPassword(),
+                    DatabaseTypeUtils.createDatabaseType(connectionInfo.getUrl()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
