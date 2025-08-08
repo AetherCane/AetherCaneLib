@@ -5,8 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ConnectionInfo {
 
     private final String url;
-    private final String username;
-    private final String password;
+
+    private String username;
+    private String password;
 
     public ConnectionInfo(DriverType driverType, String host, String port, String database,
                           boolean useSSL, String username, String password) {
@@ -15,10 +16,8 @@ public class ConnectionInfo {
         this.password = password;
     }
 
-    public ConnectionInfo(DriverType driverType, String databaseFilePath, String password, String username) {
+    public ConnectionInfo(DriverType driverType, String databaseFilePath) {
         this.url = driverType.formatURL(databaseFilePath);
-        this.password = password;
-        this.username = username;
     }
 
     public String getUrl() {
