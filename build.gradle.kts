@@ -1,7 +1,9 @@
-import org.gradle.internal.impldep.org.bouncycastle.util.encoders.UTF8
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     `java-library`
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+
 }
 
 group = "com.aethercane"
@@ -25,4 +27,20 @@ java.sourceCompatibility = JavaVersion.VERSION_21
 
 tasks.withType<JavaCompile>(){
     options.encoding = "UTF-8"
+}
+
+tasks.named<ShadowJar>("shadowJar") {
+    archiveClassifier.set("")
+    archiveFileName.set(rootProject.name + "-" + rootProject.version + ".jar")
+    mergeServiceFiles()
+
+    relocate("com.fasterxml.jackson", "com.aethercanelib.libs.jackson")
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
 }
