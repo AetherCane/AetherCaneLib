@@ -55,14 +55,14 @@ public class QueryRepository<V extends DatabaseObject, ID> extends AbstractRepos
         });
     }
 
-//
-//    public CompletableFuture<Optional<V>> findById(ID id) {
-//        return CompletableFuture.supplyAsync(() -> {
-//            try {
-//                return Optional.ofNullable(dao.queryForId(id));
-//            } catch (SQLException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//    }
+    @Override
+    public CompletableFuture<Optional<V>> findById(ID id) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return Optional.ofNullable(dao.queryForId(id));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
 }
