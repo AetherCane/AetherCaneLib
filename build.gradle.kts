@@ -2,6 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     `java-library`
+    `maven-publish`
     id("com.gradleup.shadow") version "8.3.0"
 }
 
@@ -43,6 +44,14 @@ tasks.named<ShadowJar>("shadowJar") {
     relocate("com.fasterxml.jackson", "com.aethercane.libs.jackson")
     relocate("dev.triumphteam", "com.aethercane.libs.triumphteam")
 }
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            project.shadow.component(this)
+        }
+    }
+}
+
 java {
     targetCompatibility = JavaVersion.VERSION_21
     sourceCompatibility = JavaVersion.VERSION_21
