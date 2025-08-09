@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.aethercane"
-version = "1.2"
+version = "1.3"
 
 repositories {
     mavenCentral()
