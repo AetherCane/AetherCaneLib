@@ -56,12 +56,16 @@ public enum ConfigMapper {
         }
     }
 
-//    public <T> void save(String path, T value) {
-//        File file = new File(plugin.getDataFolder(), path);
-//        try {
-//            mapper.writeValue(file, value);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public <T> void save(String path, T value) {
+        File file = new File(plugin.getDataFolder(), path);
+        try {
+            mapper.writeValue(file, value);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ObjectMapper getMapper() {
+        return mapper;
+    }
 }

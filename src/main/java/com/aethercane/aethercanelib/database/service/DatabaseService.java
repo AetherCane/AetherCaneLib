@@ -2,6 +2,7 @@ package com.aethercane.aethercanelib.database.service;
 
 import com.aethercane.aethercanelib.database.model.ConnectionInfo;
 import com.aethercane.aethercanelib.database.repository.AbstractRepository;
+import com.j256.ormlite.db.DatabaseType;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.jdbc.db.DatabaseTypeUtils;
@@ -15,11 +16,13 @@ public class DatabaseService {
 
     public void init(ConnectionInfo connectionInfo) {
         try {
+            DatabaseType type = DatabaseTypeUtils.createDatabaseType(connectionInfo.getUrl());
+            System.out.println(type.getDatabaseName());
             connectionSource = new JdbcConnectionSource(
                     connectionInfo.getUrl(),
                     connectionInfo.getUsername(),
                     connectionInfo.getPassword(),
-                    DatabaseTypeUtils.createDatabaseType(connectionInfo.getUrl()));
+                    type);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
