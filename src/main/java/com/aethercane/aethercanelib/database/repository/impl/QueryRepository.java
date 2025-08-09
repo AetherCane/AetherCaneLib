@@ -65,4 +65,15 @@ public class QueryRepository<V extends DatabaseObject, ID> extends AbstractRepos
             }
         });
     }
+
+    @Override
+    public CompletableFuture<Collection<V>> findAll() {
+        return CompletableFuture.supplyAsync(() -> {
+           try {
+               return dao.queryForAll();
+           } catch (SQLException e) {
+               throw new RuntimeException();
+           }
+        });
+    }
 }

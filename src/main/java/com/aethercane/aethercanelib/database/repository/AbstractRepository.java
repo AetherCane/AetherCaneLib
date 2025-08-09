@@ -35,4 +35,5 @@ public abstract class AbstractRepository<V extends DatabaseObject, ID> {
     public abstract CompletableFuture<Void> save(Collection<V> value);
     public abstract CompletableFuture<Void> delete(V value);
     public abstract CompletableFuture<Optional<V>> findById(ID id);
+    public abstract CompletableFuture<Collection<V>> findAll();
 }
