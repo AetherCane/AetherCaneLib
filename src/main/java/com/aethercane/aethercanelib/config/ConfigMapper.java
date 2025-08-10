@@ -29,32 +29,35 @@ public enum ConfigMapper {
 
     public <T> T load(String path, Class<T> type) {
         File file = new File(plugin.getDataFolder(), path + extension);
-        String resourcePath = plugin.getDataFolder().toPath().relativize(file.toPath()).toString().replace(File.separatorChar, '/');
+        String resourcePath = plugin.getDataFolder().toPath()
+                .relativize(file.toPath())
+                .toString()
+                .replace(File.separatorChar, '/');
 
         if (!file.exists()) {
             plugin.saveResource(resourcePath, false);
-            try {
-                return mapper.readValue(file, type);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
 
-        InputStream stream = plugin.getResource(resourcePath);
-        FileConfiguration configuration = YamlConfiguration.loadConfiguration(new InputStreamReader(stream));
-        configuration.options().copyDefaults(true);
-        try {
-            configuration.save(file);
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+        try (InputStream defStream = plugin.getResource(resourcePath)) {
+            if (defStream != null) {
+                YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defStream));
+
+                config.setDefaults(defConfig);
+                config.options().copyDefaults(true);
+            }
+            config.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         try {
             return mapper.readValue(file, type);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     public <T> void save(String path, T value) {
         File file = new File(plugin.getDataFolder(), path);
