@@ -39,8 +39,11 @@ tasks.named<ShadowJar>("shadowJar") {
     archiveClassifier.set("")
     archiveFileName.set(rootProject.name + "-" + rootProject.version + ".jar")
     mergeServiceFiles()
-
-
+    manifest {
+        attributes(
+            "Main-Class" to "com.aethercane.aethercanelib.AetherCaneLib"
+        )
+    }
     relocate("com.fasterxml.jackson", "com.aethercane.libs.jackson")
     relocate("dev.triumphteam", "com.aethercane.libs.triumphteam")
 }

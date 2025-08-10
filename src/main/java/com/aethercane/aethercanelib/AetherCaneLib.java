@@ -2,7 +2,7 @@ package com.aethercane.aethercanelib;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class AetherCaneLib {
+public class AetherCaneLib extends JavaPlugin{
 
     private static JavaPlugin plugin;
 
@@ -10,7 +10,18 @@ public class AetherCaneLib {
         AetherCaneLib.plugin = plugin;
     }
 
+    @Override
+    public void onEnable() {
+        super.onEnable();
+    }
+
+    @Override
+    public void onDisable() {
+        super.onDisable();
+    }
+
     public static JavaPlugin getPlugin() {
         return plugin;
     }
+
 }

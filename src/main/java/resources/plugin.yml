@@ -1,0 +1,5 @@
+name: AetherCaneLib
+version: 1.3
+main: com.aethercane.aethercanelib.AetherCaneLib
+description: AetherCaneLib
+api-version: '1.13'
