@@ -68,6 +68,16 @@ public enum ConfigMapper {
         }
     }
 
+
+    public <T> void reload(String path, Class<T> type) {
+        File file = new File(plugin.getDataFolder(), path + extension);
+        try {
+            mapper.readValue(file, type);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public ObjectMapper getMapper() {
         return mapper;
     }
