@@ -1,6 +1,5 @@
-package com.aethercane.aethercanelib.config;
+package com.aethercane.aethercanelib.config.mapper;
 
-import com.aethercane.aethercanelib.AetherCaneLib;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
@@ -13,34 +12,29 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public enum ConfigMapper {
+public class ConfigMapper {
 
-    YAML(".yml", YAMLMapper.builder().disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER).build());
+    private final JavaPlugin plugin;
 
     private final String extension;
     private final ObjectMapper mapper;
 
-    private static final JavaPlugin plugin = AetherCaneLib.getPlugin();
-
-    ConfigMapper(String extension, ObjectMapper mapper) {
-        this.extension = extension;
-        this.mapper = mapper;
+    public ConfigMapper(MapperType mapperType, JavaPlugin plugin) {
+        this.plugin = plugin;
+        this.extension = mapperType.extension;
+        this.mapper = mapperType.mapper;
     }
 
     public <T> T load(String path, Class<T> type) {
         File file = new File(plugin.getDataFolder(), path + extension);
-        String resourcePath = plugin.getDataFolder().toPath()
-                .relativize(file.toPath())
-                .toString()
-                .replace(File.separatorChar, '/');
 
         if (!file.exists()) {
-            plugin.saveResource(resourcePath, false);
+            plugin.saveResource(path + extension, false);
         }
 
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
-        try (InputStream defStream = plugin.getResource(resourcePath)) {
+        try (InputStream defStream = plugin.getResource(path)) {
             if (defStream != null) {
                 YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defStream));
 
@@ -51,13 +45,13 @@ public enum ConfigMapper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         try {
             return mapper.readValue(file, type);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
 
     public <T> void save(String path, T value) {
         File file = new File(plugin.getDataFolder(), path);
@@ -68,17 +62,18 @@ public enum ConfigMapper {
         }
     }
 
+    public enum MapperType {
 
-    public <T> void reload(String path, Class<T> type) {
-        File file = new File(plugin.getDataFolder(), path + extension);
-        try {
-            mapper.readValue(file, type);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        YAML(".yml", YAMLMapper.builder().disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER).build());
+
+        private final String extension;
+        private final ObjectMapper mapper;
+
+        MapperType(String extension, ObjectMapper mapper) {
+            this.extension = extension;
+            this.mapper = mapper;
         }
-    }
 
-    public ObjectMapper getMapper() {
-        return mapper;
+
     }
 }
