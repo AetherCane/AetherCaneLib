@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class MenuConfig {
+public class MenuConfig<T extends ItemConfig> {
 
     private String title = "";
     private int rows = 54;
@@ -18,7 +18,7 @@ public class MenuConfig {
     @JsonProperty("filler-slots")
     private List<Integer> fillerSlots = Collections.emptyList();
 
-    private Map<String, ItemConfig> items = Map.of();
+    private Map<String, T> items = Map.of();
 
     public String getTitle() {
         return title;
@@ -36,7 +36,7 @@ public class MenuConfig {
         return fillerSlots;
     }
 
-    public Map<String, ItemConfig> getItems() {
+    public Map<String, T> getItems() {
         return items;
     }
 }
