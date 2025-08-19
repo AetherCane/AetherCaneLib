@@ -1,5 +1,5 @@
 name: AetherCaneLib
-version: 1.4
+version: 1.5
 main: com.aethercane.aethercanelib.AetherCaneLib
 description: AetherCaneLib
 api-version: '1.13'
