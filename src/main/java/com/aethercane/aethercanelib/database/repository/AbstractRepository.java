@@ -3,7 +3,6 @@ package com.aethercane.aethercanelib.database.repository;
 import com.aethercane.aethercanelib.database.model.DatabaseObject;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 

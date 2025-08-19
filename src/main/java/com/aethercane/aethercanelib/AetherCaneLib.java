@@ -1,27 +1,31 @@
 package com.aethercane.aethercanelib;
 
+import com.aethercane.aethercanelib.skin.listener.PlayerListener;
+import com.aethercane.aethercanelib.skin.service.SkinService;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AetherCaneLib extends JavaPlugin{
 
-    private static JavaPlugin plugin;
+    private static AetherCaneLib instance;
 
-    public static void register(JavaPlugin plugin) {
-        AetherCaneLib.plugin = plugin;
-    }
+    private final SkinService skinService = new SkinService();
 
     @Override
     public void onEnable() {
-        super.onEnable();
+        instance = this;
+        getServer().getPluginManager().registerEvents(new PlayerListener(skinService), this);
     }
 
     @Override
     public void onDisable() {
-        super.onDisable();
     }
 
-    public static JavaPlugin getPlugin() {
-        return plugin;
+    public SkinService getSkinService() {
+        return skinService;
+    }
+
+    public static AetherCaneLib getInstance() {
+        return instance;
     }
 
 }

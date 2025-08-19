@@ -73,7 +73,5 @@ public class ConfigMapper {
             this.extension = extension;
             this.mapper = mapper;
         }
-
-
     }
 }

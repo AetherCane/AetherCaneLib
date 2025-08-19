@@ -17,7 +17,6 @@ public class DatabaseService {
     public void init(ConnectionInfo connectionInfo) {
         try {
             DatabaseType type = DatabaseTypeUtils.createDatabaseType(connectionInfo.getUrl());
-            System.out.println(type.getDatabaseName());
             connectionSource = new JdbcConnectionSource(
                     connectionInfo.getUrl(),
                     connectionInfo.getUsername(),

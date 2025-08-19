@@ -26,7 +26,7 @@ public class StringsUtil {
 
     public static Component applyPlaceholder(String input, Player player) {
         if (!Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            AetherCaneLib.getPlugin().getServer().getLogger().log(Level.WARNING, "PlaceholderAPI not found, returned original string.");
+            AetherCaneLib.getInstance().getServer().getLogger().log(Level.WARNING, "PlaceholderAPI not found, returned original string.");
             return Component.text(input);
         }
         return Component.text(PlaceholderAPI.setPlaceholders(player, input));
@@ -34,7 +34,7 @@ public class StringsUtil {
 
     private static Component applyPlaceholder(Component component, Player player) {
         if (!Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            AetherCaneLib.getPlugin().getServer().getLogger().log(Level.WARNING, "PlaceholderAPI not found, returned original string.");
+            AetherCaneLib.getInstance().getServer().getLogger().log(Level.WARNING, "PlaceholderAPI not found, returned original string.");
             return component;
         }
         String input = sectionSerializer.serialize(component);
