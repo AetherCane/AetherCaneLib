@@ -30,6 +30,7 @@ public class Menu {
         gui.open(player);
     }
 
+
     protected void addContent() {
         List<Integer> fillerSlots = menuConfig.getFillerSlots();
 
