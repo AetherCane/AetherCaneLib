@@ -34,7 +34,7 @@ public class ConfigMapper {
 
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
-        try (InputStream defStream = plugin.getResource(path)) {
+        try (InputStream defStream = plugin.getResource(path + extension)) {
             if (defStream != null) {
                 YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defStream));
 
