@@ -6,6 +6,8 @@ import com.j256.ormlite.db.DatabaseType;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.jdbc.db.DatabaseTypeUtils;
+import com.j256.ormlite.logger.LoggerFactory;
+import com.j256.ormlite.logger.NullLogBackend;
 import com.j256.ormlite.support.ConnectionSource;
 
 import java.sql.SQLException;
@@ -15,6 +17,8 @@ public class DatabaseService {
     private JdbcConnectionSource connectionSource;
 
     public void init(ConnectionInfo connectionInfo) {
+        LoggerFactory.setLogBackendFactory(new NullLogBackend.NullLogBackendFactory());
+
         try {
             DatabaseType type = DatabaseTypeUtils.createDatabaseType(connectionInfo.getUrl());
             connectionSource = new JdbcConnectionSource(
