@@ -36,7 +36,7 @@ public class LocationUtil {
                 Float.parseFloat(arguments[4]));
     }
 
-    protected Location alignDirection(Location loc) {
+    public static Location alignDirection(Location loc) {
         Location location = loc.clone();
         location.setPitch(0);
         switch (yawToFace(location.getYaw())) {
