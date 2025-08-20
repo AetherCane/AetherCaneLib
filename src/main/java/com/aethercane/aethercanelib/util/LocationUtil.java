@@ -6,7 +6,7 @@ import org.bukkit.World;
 
 public class LocationUtil {
 
-    public String fromLocation(Location location) {
+    public static String fromLocation(Location location) {
         return location.getWorld().getName() + "," +
                 location.getX() + "," +
                 location.getY() + "," +
@@ -15,10 +15,19 @@ public class LocationUtil {
                 location.getYaw();
     }
 
-    public Location toLocation(String string) {
+    public static Location toLocation(String string) {
         String[] arguments = string.split(",");
+
         World world = Bukkit.getWorld(arguments[0]);
-        return new Location(world, Double.parseDouble(arguments[0]), Double.parseDouble(arguments[1]),
-                Double.parseDouble(arguments[2]), Float.parseFloat(arguments[3]), Float.parseFloat(arguments[4]));
+        if(world == null) {
+            throw new RuntimeException("not found " + arguments[0] + " named world");
+        }
+
+        return new Location(world,
+                Double.parseDouble(arguments[0]),
+                Double.parseDouble(arguments[1]),
+                Double.parseDouble(arguments[2]),
+                Float.parseFloat(arguments[3]),
+                Float.parseFloat(arguments[4]));
     }
 }
