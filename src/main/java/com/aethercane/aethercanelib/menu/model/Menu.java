@@ -14,9 +14,11 @@ public class Menu {
 
     private final MenuConfig menuConfig;
 
+    protected final Player player;
     protected final Gui gui;
 
-    public Menu(MenuConfig menuConfig, TagResolver... resolvers) {
+    public Menu(Player player, MenuConfig menuConfig, TagResolver... resolvers) {
+        this.player = player;
         this.menuConfig = menuConfig;
         this.gui = Gui.gui()
                 .title(StringsUtil.applyString(menuConfig.getTitle(), null, resolvers))
@@ -25,13 +27,18 @@ public class Menu {
                 .create();
     }
 
-    public void open(Player player) {
+    public void open() {
         addContent();
         gui.open(player);
     }
 
     protected void addContent() {
         List<Integer> fillerSlots = menuConfig.getFillerSlots();
+
+        if(menuConfig.isAutoFiller()) {
+            gui.getFiller().fill(ItemBuilder.from(menuConfig.getFillerMaterial()).name(Component.space()).asGuiItem());
+            return;
+        }
 
         for (Integer slot : fillerSlots)
             gui.setItem(slot, ItemBuilder.from(menuConfig.getFillerMaterial()).name(Component.space()).asGuiItem());

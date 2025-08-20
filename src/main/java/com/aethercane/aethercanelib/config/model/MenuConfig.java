@@ -15,6 +15,9 @@ public class MenuConfig<T extends ItemConfig> {
     @JsonProperty("filler-material")
     private Material fillerMaterial = Material.AIR;
 
+    @JsonProperty("auto-filler")
+    private boolean autoFiller;
+
     @JsonProperty("filler-slots")
     private List<Integer> fillerSlots = Collections.emptyList();
 
@@ -30,6 +33,10 @@ public class MenuConfig<T extends ItemConfig> {
 
     public Material getFillerMaterial() {
         return fillerMaterial;
+    }
+
+    public boolean isAutoFiller() {
+        return autoFiller;
     }
 
     public List<Integer> getFillerSlots() {

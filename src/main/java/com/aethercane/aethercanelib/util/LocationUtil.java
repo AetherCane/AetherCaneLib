@@ -29,11 +29,11 @@ public class LocationUtil {
         }
 
         return new Location(world,
-                Double.parseDouble(arguments[0]),
                 Double.parseDouble(arguments[1]),
                 Double.parseDouble(arguments[2]),
-                Float.parseFloat(arguments[3]),
-                Float.parseFloat(arguments[4]));
+                Double.parseDouble(arguments[3]),
+                Float.parseFloat(arguments[4]),
+                Float.parseFloat(arguments[5]));
     }
 
     public static Location alignDirection(Location loc) {

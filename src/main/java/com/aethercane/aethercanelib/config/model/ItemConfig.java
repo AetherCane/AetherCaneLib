@@ -5,6 +5,7 @@ import org.bukkit.Material;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public class ItemConfig {
 
@@ -23,8 +24,8 @@ public class ItemConfig {
     @JsonProperty("head-data")
     private String headData;
 
-    private Collection<String> lore = Collections.emptyList();
-    private Collection<Integer> slots = Collections.emptyList();
+    private List<String> lore = Collections.emptyList();
+    private List<Integer> slots = Collections.emptyList();
 
     public String getDisplayName() {
         return displayName;
