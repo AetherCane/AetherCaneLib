@@ -33,7 +33,7 @@ public class ConnectionInfo {
     }
 
     public enum DriverType {
-        SQLITE("jdbc:sqlite:%s"),
+        SQLITE("jdbc:sqlite:%s.db"),
         MYSQL("jdbc:mysql://%s:%s/%s?useSSL=%s");
 
         private String urlTemplate;
