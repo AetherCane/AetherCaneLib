@@ -12,14 +12,17 @@ import java.util.List;
 
 public class Menu {
 
-    private final MenuConfig menuConfig;
-
+    protected final MenuConfig<?> menuConfig;
+    protected final TagResolver[] resolvers;
     protected final Player player;
+
     protected final Gui gui;
 
-    public Menu(Player player, MenuConfig menuConfig, TagResolver... resolvers) {
-        this.player = player;
+    public Menu(Player player, MenuConfig<?> menuConfig, TagResolver... resolvers) {
         this.menuConfig = menuConfig;
+        this.resolvers = resolvers;
+        this.player = player;
+
         this.gui = Gui.gui()
                 .title(StringsUtil.applyString(menuConfig.getTitle(), null, resolvers))
                 .rows(menuConfig.getRows())

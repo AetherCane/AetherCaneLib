@@ -1,11 +1,14 @@
 package com.aethercane.aethercanelib.menu.model;
 
 import com.aethercane.aethercanelib.config.model.PageableMenuConfig;
+import com.aethercane.aethercanelib.util.ItemUtil;
 import com.aethercane.aethercanelib.util.StringsUtil;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import dev.triumphteam.gui.guis.PaginatedGui;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.entity.Player;
@@ -15,12 +18,17 @@ import java.util.List;
 
 public abstract class PageableMenu<T> {
 
-    private final PageableMenuConfig menuConfig;
+    protected final PageableMenuConfig<?> menuConfig;
+    protected final TagResolver[] resolvers;
+    protected final Player player;
 
     protected final PaginatedGui gui;
 
-    public PageableMenu(PageableMenuConfig menuConfig, TagResolver... resolvers) {
+    public PageableMenu(Player player, PageableMenuConfig<?> menuConfig, TagResolver... resolvers) {
         this.menuConfig = menuConfig;
+        this.resolvers = resolvers;
+        this.player = player;
+
         this.gui = Gui.paginated()
                 .title(StringsUtil.applyString(menuConfig.getTitle(), null, resolvers))
                 .rows(menuConfig.getRows())
@@ -38,6 +46,14 @@ public abstract class PageableMenu<T> {
 
         for (Integer slot : fillerSlots)
             gui.setItem(slot, ItemBuilder.from(menuConfig.getFillerMaterial()).name(Component.space()).asGuiItem());
+
+        GuiItem next = ItemUtil.createItemBuilder(menuConfig.getItems().get("next"), player, resolvers)
+                .asGuiItem(event -> gui.next());
+        gui.setItem(menuConfig.getItems().get("next").getSlots(), next);
+
+        GuiItem previous = ItemUtil.createItemBuilder(menuConfig.getItems().get("previous"), player, resolvers)
+                .asGuiItem(event -> gui.previous());
+        gui.setItem(menuConfig.getItems().get("previous").getSlots(), previous);
 
         getPageableObjects().forEach(pageableObject -> gui.addItem(getPageableItem(pageableObject)));
     }

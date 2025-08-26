@@ -51,11 +51,11 @@ public class ItemConfig {
         return headData;
     }
 
-    public Collection<String> getLore() {
+    public List<String> getLore() {
         return lore;
     }
 
-    public Collection<Integer> getSlots() {
+    public List<Integer> getSlots() {
         return slots;
     }
 }
