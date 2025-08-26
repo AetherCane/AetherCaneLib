@@ -2,12 +2,16 @@ package com.aethercane.aethercanelib.database.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
+
 public class ConnectionInfo {
 
     private final String url;
 
     private String username;
     private String password;
+
+    private String dataFolderPath;
 
     public ConnectionInfo(DriverType driverType, String host, int port, String database,
                           boolean useSSL, String username, String password) {
@@ -16,7 +20,8 @@ public class ConnectionInfo {
         this.password = password;
     }
 
-    public ConnectionInfo(DriverType driverType, String databaseFilePath) {
+    public ConnectionInfo(DriverType driverType, String dataFolderPath, String databaseFilePath) {
+        this.dataFolderPath = dataFolderPath;
         this.url = driverType.formatURL(databaseFilePath);
     }
 
@@ -33,10 +38,10 @@ public class ConnectionInfo {
     }
 
     public enum DriverType {
-        SQLITE("jdbc:sqlite:%s.db"),
+        SQLITE("jdbc:sqlite:" + new File("%s", "%s") + ".db"),
         MYSQL("jdbc:mysql://%s:%s/%s?useSSL=%s");
 
-        private String urlTemplate;
+        private final String urlTemplate;
 
         DriverType(String urlTemplate) {
             this.urlTemplate = urlTemplate;
