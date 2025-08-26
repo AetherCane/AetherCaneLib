@@ -11,8 +11,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
@@ -21,8 +25,22 @@ public class StringsUtil {
     private final static LegacyComponentSerializer ampersandSerializer = LegacyComponentSerializer.legacyAmpersand();
     private final static LegacyComponentSerializer sectionSerializer = LegacyComponentSerializer.legacySection();
 
+    private static final DecimalFormat numberFormatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+    private static final DecimalFormatSymbols numberSymbols = numberFormatter.getDecimalFormatSymbols();
+
+    private static final DecimalFormat moneyFormatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+    private static final DecimalFormatSymbols moneySymbols = moneyFormatter.getDecimalFormatSymbols();
+
     private final static MiniMessage MINI_MESSAGE = MiniMessage.builder()
             .postProcessor(component -> component.decoration(TextDecoration.ITALIC, false)).build();
+
+    static {
+        numberSymbols.setGroupingSeparator('.');
+        numberFormatter.setDecimalFormatSymbols(numberSymbols);
+
+        moneySymbols.setGroupingSeparator(',');
+        moneyFormatter.setDecimalFormatSymbols(moneySymbols);
+    }
 
     public static Component applyPlaceholder(String input, Player player) {
         if (!Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
@@ -67,5 +85,13 @@ public class StringsUtil {
         return input.stream()
                 .map(line -> applyString(line, player, resolvers))
                 .toList();
+    }
+
+    public static String numberFormat(int number) {
+        return numberFormatter.format(number);
+    }
+
+    public static String moneyFormat(double number) {
+        return moneyFormatter.format(number);
     }
 }
