@@ -11,8 +11,6 @@ public class ConnectionInfo {
     private String username;
     private String password;
 
-    private String dataFolderPath;
-
     public ConnectionInfo(DriverType driverType, String host, int port, String database,
                           boolean useSSL, String username, String password) {
         this.url = driverType.formatURL(host, port, database, useSSL);
@@ -21,8 +19,7 @@ public class ConnectionInfo {
     }
 
     public ConnectionInfo(DriverType driverType, String dataFolderPath, String databaseFilePath) {
-        this.dataFolderPath = dataFolderPath;
-        this.url = driverType.formatURL(databaseFilePath);
+        this.url = driverType.formatURL(dataFolderPath, databaseFilePath);
     }
 
     public String getUrl() {

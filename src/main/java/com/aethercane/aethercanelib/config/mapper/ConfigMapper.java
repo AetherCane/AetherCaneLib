@@ -30,6 +30,11 @@ public class ConfigMapper {
 
         if (!file.exists()) {
             plugin.saveResource(path + extension, false);
+            try {
+                return mapper.readValue(file, type);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);

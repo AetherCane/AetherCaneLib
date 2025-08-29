@@ -1,5 +1,6 @@
 package com.aethercane.aethercanelib.menu.model;
 
+import com.aethercane.aethercanelib.config.model.ItemConfig;
 import com.aethercane.aethercanelib.config.model.PageableMenuConfig;
 import com.aethercane.aethercanelib.util.ItemUtil;
 import com.aethercane.aethercanelib.util.StringsUtil;
@@ -36,7 +37,7 @@ public abstract class PageableMenu<T> {
                 .pageSize(menuConfig.getPageSlotSize()).create();
     }
 
-    public void open(Player player) {
+    public void open() {
         addContent();
         gui.open(player);
     }
@@ -47,13 +48,19 @@ public abstract class PageableMenu<T> {
         for (Integer slot : fillerSlots)
             gui.setItem(slot, ItemBuilder.from(menuConfig.getFillerMaterial()).name(Component.space()).asGuiItem());
 
-        GuiItem next = ItemUtil.createItemBuilder(menuConfig.getItems().get("next"), player, resolvers)
-                .asGuiItem(event -> gui.next());
-        gui.setItem(menuConfig.getItems().get("next").getSlots(), next);
+        ItemConfig nextItemConfig = menuConfig.getItems().get("next");
+        if(nextItemConfig != null) {
+            GuiItem next = ItemUtil.createItemBuilder(nextItemConfig, player, resolvers)
+                    .asGuiItem(event -> gui.next());
+            gui.setItem(nextItemConfig.getSlots(), next);
+        }
 
-        GuiItem previous = ItemUtil.createItemBuilder(menuConfig.getItems().get("previous"), player, resolvers)
-                .asGuiItem(event -> gui.previous());
-        gui.setItem(menuConfig.getItems().get("previous").getSlots(), previous);
+        ItemConfig previousItemConfig = menuConfig.getItems().get("previous");
+        if(previousItemConfig != null) {
+            GuiItem previous = ItemUtil.createItemBuilder(menuConfig.getItems().get("previous"), player, resolvers)
+                    .asGuiItem(event -> gui.previous());
+            gui.setItem(menuConfig.getItems().get("previous").getSlots(), previous);
+        }
 
         getPageableObjects().forEach(pageableObject -> gui.addItem(getPageableItem(pageableObject)));
     }
